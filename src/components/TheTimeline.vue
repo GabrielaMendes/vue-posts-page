@@ -16,6 +16,7 @@ function selectPeriod (period: string) {
 			<a 
         v-for="period in periods"
         :key="period"
+        :class="{ 'is-active': period === selectedPeriod }"
         @click="selectPeriod(period)"
       >
 				{{ period }}
