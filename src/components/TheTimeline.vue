@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { DateTime } from "luxon";
 import { ref } from "vue";
 import { Post, today, thisWeek, thisMonth } from "../posts";
 
@@ -12,11 +13,13 @@ function selectPeriod(period: Period) {
 	selectedPeriod.value = period;
 }
 
-const posts: Post[] = [
-  today,
-  thisWeek,
-  thisMonth
-];
+const posts = [today, thisWeek, thisMonth]
+  .map((post) => {
+    return {
+      ...post,
+      created: DateTime.fromISO(post.created),
+    };
+});
 </script>
 
 <template>
@@ -32,13 +35,9 @@ const posts: Post[] = [
 			</a>
 		</span>
 
-    <a 
-      v-for="post in posts"
-      :key="post.id"
-      class="panel-block"
-    >
-      <a>{{ post.title }}</a>
-      <div>{{ post.created }}</div>
-    </a>
+		<a v-for="post in posts" :key="post.id" class="panel-block">
+			<a>{{ post.title }}</a>
+			<div>{{ post.created.toFormat("d MMM") }}</div>
+		</a>
 	</nav>
 </template>
