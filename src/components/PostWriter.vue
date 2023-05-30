@@ -7,6 +7,7 @@ const props = defineProps<{
 }>()
 
 const title = ref(props.post.title)
+const content = ref(props.post.markdown)
 const contentEditable = ref<HTMLDivElement>()
 
 onMounted(() => {
@@ -27,7 +28,7 @@ onMounted(() => {
   <div class="columns">
       <div class="column">
         <div contenteditable ref="contentEditable">
-          This is the post
+          {{ content }}
         </div>
       </div>
       <div class="column">
