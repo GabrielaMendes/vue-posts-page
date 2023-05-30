@@ -2,7 +2,10 @@
 import { DateTime } from "luxon";
 import { ref, computed } from "vue";
 import { today, thisWeek, thisMonth, TimelinePost } from "../posts";
+import { usePosts } from "../stores/posts"
 import TimelineItem from "./TimelineItem.vue";
+
+const postsStore = usePosts()
 
 const periods = ["Today", "This Week", "This Month"] as const;
 
