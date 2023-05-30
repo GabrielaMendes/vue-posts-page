@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import TheTimeline from "../components/TheTimeline.vue";
+import Timeline from "../components/Timeline.vue";
 </script>
 
 <template>
 	<Suspense>
 		<template #default>
-			<TheTimeline />
+			<Timeline />
 		</template>
 
 		<template #fallback>
