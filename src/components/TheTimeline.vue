@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import { DateTime } from "luxon";
 import { ref, computed } from "vue";
-import { today, thisWeek, thisMonth, TimelinePost } from "../posts";
-import { usePosts } from "../stores/posts"
+import { TimelinePost } from "../posts";
+import { usePosts } from "../stores/posts";
 import TimelineItem from "./TimelineItem.vue";
 
-const postsStore = usePosts()
+const postsStore = usePosts();
 
 const periods = ["Today", "This Week", "This Month"] as const;
 
@@ -18,8 +18,14 @@ function selectPeriod(period: Period) {
 }
 
 const posts = computed<TimelinePost[]>(() => {
-	return [today, thisWeek, thisMonth]
-		.map((post) => {
+	return postsStore.ids
+		.map((id) => {
+			const post = postsStore.all.get(id);
+
+			if (!post) {
+				throw Error(`Post with id of ${id} was expected but not found`);
+			}
+
 			return {
 				...post,
 				created: DateTime.fromISO(post.created),
@@ -54,10 +60,6 @@ const posts = computed<TimelinePost[]>(() => {
 			</a>
 		</span>
 
-		<TimelineItem 
-      v-for="post in posts"
-      :key="post.id"
-      :post="post"
-    />
+		<TimelineItem v-for="post in posts" :key="post.id" :post="post" />
 	</nav>
 </template>
