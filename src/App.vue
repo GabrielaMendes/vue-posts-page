@@ -5,7 +5,15 @@ import TheTimeline from "./components/TheTimeline.vue";
 <template>
 	<div class="section">
 		<div class="container">
-			<TheTimeline />
+			<Suspense>
+        <template #default>
+          <TheTimeline />
+        </template>
+
+        <template #fallback>
+          <progress class="progress is-primary is-small" />
+        </template>
+      </Suspense>
 		</div>
 	</div>
 </template>
