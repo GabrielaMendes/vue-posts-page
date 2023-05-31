@@ -1,12 +1,23 @@
 import * as express from "express";
 import * as cors from "cors";
-import { today, thisWeek, thisMonth } from "../posts";
+import * as bodyParser from "body-parser";
+import { today, thisWeek, thisMonth, Post } from "../posts";
 
 const app = express();
 app.use(cors());
+app.use(bodyParser.json());
+
+const allPosts = [today, thisWeek, thisMonth];
 
 app.get("/posts", (_, res) => {
-	res.json([today, thisWeek, thisMonth]);
+	res.json(allPosts);
+});
+
+app.post<{}, {}, Post>("/posts", (req, res) => {
+  console.log("aqui")
+	const post = { ...req.body, id: (Math.random() * 100000).toFixed() };
+	allPosts.push(post);
+	res.json(post);
 });
 
 app.listen(8000, () => {
