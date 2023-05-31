@@ -1,11 +1,15 @@
 <script lang="ts" setup>
 import { ref, computed } from "vue";
 import { useModal } from "./composables/modal";
+import { validate, lenth, required } from "./validation"
 import TheNavbar from "./components/TheNavbar.vue";
 import FormInput from "./components/FormInput.vue";
 
 const modal = useModal();
-const username = ref("")
+const username = ref("");
+const usernameStatus = computed(() => {
+  return validate(username.value, [required, lenth({min: 5, max: 10})])
+})
 
 const modalVisibility = computed(() => {
 	return {
@@ -30,7 +34,7 @@ const modalVisibility = computed(() => {
 
 	<div class="section">
 		<div class="container">
-      <FormInput name="username" v-model="username" />
+      <FormInput name="username" v-model="username" :status="usernameStatus" />
 			<TheNavbar />
 			<RouterView />
 		</div>
