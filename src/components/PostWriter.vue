@@ -4,6 +4,7 @@ import { TimelinePost } from "../posts";
 import { marked } from "marked";
 import highlightjs from "highlight.js";
 import debounce from "lodash/debounce";
+import { usePosts } from "../stores/posts";
 
 const props = defineProps<{
 	post: TimelinePost;
@@ -13,6 +14,8 @@ const title = ref(props.post.title);
 const content = ref(props.post.markdown);
 const contentEditable = ref<HTMLDivElement>();
 const html = ref("");
+
+const posts = usePosts();
 
 function parseHtml(markdown: string) {
 	marked.parse(
@@ -30,9 +33,12 @@ function parseHtml(markdown: string) {
 	);
 }
 
-watch(content, debounce((newContent) => {
+watch(
+	content,
+	debounce((newContent) => {
 		parseHtml(newContent);
-	}, 200), {
+	}, 200),
+	{
 		immediate: true,
 	}
 );
@@ -49,6 +55,16 @@ function handleInput() {
 		throw Error("ContentEditable DOM node was not found");
 	}
 	content.value = contentEditable.value.innerText;
+}
+
+function handeClick() {
+	const newPost: TimelinePost = {
+		...props.post,
+		title: title.value,
+		markdown: content.value,
+		html: html.value,
+	};
+  posts.createPost(newPost);
 }
 </script>
 
@@ -68,6 +84,14 @@ function handleInput() {
 		</div>
 		<div class="column">
 			<div v-html="html" />
+		</div>
+	</div>
+
+	<div class="comumns">
+		<div class="column">
+			<button class="button is-primary is-pulled-right" @click="handeClick">
+				Save Post
+			</button>
 		</div>
 	</div>
 </template>
