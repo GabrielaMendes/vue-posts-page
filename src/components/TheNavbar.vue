@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import { useModal } from "../composables/modal";
+import SignupForm from "./SignupForm.vue";
 
 const modal = useModal()
 </script>
@@ -17,6 +18,6 @@ const modal = useModal()
 	</div>
 
   <Teleport to="#modal">
-    Content to be rended
+    <SignupForm />
   </Teleport>
 </template>
