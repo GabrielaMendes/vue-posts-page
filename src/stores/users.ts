@@ -11,6 +11,20 @@ export const useUsers = defineStore("users", {
 	}),
 
 	actions: {
+		async authenticate() {
+			try {
+				const res = await window.fetch("/api/current-user", {
+					headers: {
+						"Content-Type": "application/json",
+					},
+				});
+				const result = await res.json();
+				this.currentUserId = result.id;
+			} catch (e) {
+				this.currentUserId = undefined;
+			}
+		},
+
 		async createUser(newUser: NewUser) {
 			const body = JSON.stringify(newUser);
 
@@ -24,14 +38,14 @@ export const useUsers = defineStore("users", {
 			return this.authenticate();
 		},
 
-		async authenticate() {
-			const res = await window.fetch("/api/current-user", {
+		async logout() {
+			await window.fetch("/api/logout", {
+				method: "POST",
 				headers: {
 					"Content-Type": "application/json",
 				},
 			});
-			const result = await res.json();
-			this.currentUserId = result.id;
+			return this.authenticate();
 		},
 	},
 });
