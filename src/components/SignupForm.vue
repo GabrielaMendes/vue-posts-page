@@ -3,6 +3,7 @@ import { ref, computed } from "vue";
 import { validate, lenth, required } from "../validation";
 import { useModal } from "../composables/modal";
 import { NewUser } from "../users";
+import { useUsers } from "../stores/users";
 import FormInput from "./FormInput.vue";
 
 const username = ref("");
@@ -16,33 +17,42 @@ const passwordStatus = computed(() => {
 });
 
 const isInvalid = computed(() => {
-  return !usernameStatus.value.valid || !passwordStatus.value.valid
-})
+	return !usernameStatus.value.valid || !passwordStatus.value.valid;
+});
 
+const usersStore = useUsers();
 const modal = useModal();
 
-function handleSubmit() {
-  if (isInvalid.value) {
-    return;
-  }
+async function handleSubmit() {
+	if (isInvalid.value) {
+		return;
+	}
 
 	const newUser: NewUser = {
-    username: username.value,
-    password: password.value,
-  }
+		username: username.value,
+		password: password.value,
+	};
 
-  console.log(newUser)
-  modal.hideModal()
+	try {
+		await usersStore.createUser(newUser);
+	} catch (e) {}
+
+	modal.hideModal();
 }
 </script>
 
 <template>
 	<form class="form" @submit.prevent="handleSubmit">
-		<FormInput name="username" v-model="username" :status="usernameStatus" />
+		<FormInput
+			name="username"
+			type="text"
+			v-model="username"
+			:status="usernameStatus"
+		/>
 		<FormInput
 			name="password"
-			v-model="password"
 			type="password"
+			v-model="password"
 			:status="passwordStatus"
 		/>
 		<button class="button" :disabled="isInvalid">Submit</button>

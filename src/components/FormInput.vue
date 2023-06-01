@@ -3,7 +3,7 @@ import { Status } from '../validation';
 
 defineProps<{
 	name: string;
-  type?: string;
+  type: string;
 	modelValue: string;
   status: Status;
 }>();
@@ -23,7 +23,7 @@ function handleInput(e: Event) {
 		<div :for="name" class="label">{{ name }}</div>
 		<div class="control">
 			<input
-				:type="type ? type : 'text'"
+				:type="type"
 				:id="name"
 				class="input"
 				:value="modelValue"
