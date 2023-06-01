@@ -38,7 +38,7 @@ function authenticate(id: string, req: express.Request, res: express.Response) {
 app.get("/current-user", (req, res) => {
 	try {
 		const token = req.cookies[COOKIE];
-		const result = jsonwebtoken.verify(token, "SECRET") as { id: string };
+		const result = jsonwebtoken.verify(token, SECRET) as { id: string };
 		res.json({ id: result.id });
 	} catch (e) {
 		res.status(404).end();
