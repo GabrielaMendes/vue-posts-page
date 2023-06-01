@@ -13,7 +13,7 @@ const modalVisibility = computed(() => {
 	};
 });
 
-usersStore.authenticate()
+usersStore.authenticate();
 </script>
 
 <template>
@@ -29,7 +29,6 @@ usersStore.authenticate()
 			></button>
 		</div>
 	</div>
-
 	<div class="section">
 		<div class="container">
 			<TheNavbar />
