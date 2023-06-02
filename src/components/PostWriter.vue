@@ -1,25 +1,25 @@
 <script lang="ts" setup>
 import { ref, onMounted, watch } from "vue";
-import { useRouter } from "vue-router";
 import { TimelinePost, Post } from "../posts";
 import { marked } from "marked";
 import highlightjs from "highlight.js";
 import debounce from "lodash/debounce";
-import { usePosts } from "../stores/posts";
 import { useUsers } from "../stores/users";
 
 const props = defineProps<{
 	post: TimelinePost | Post;
 }>();
 
+const emit = defineEmits<{
+  (event: "submit", post: Post): void
+}>()
+
 const title = ref(props.post.title);
 const content = ref(props.post.markdown);
 const contentEditable = ref<HTMLDivElement>();
 const html = ref("");
 
-const posts = usePosts();
 const usersStore = useUsers();
-const router = useRouter();
 
 function parseHtml(markdown: string) {
 	marked.parse(
@@ -61,7 +61,7 @@ function handleInput() {
 	content.value = contentEditable.value.innerText;
 }
 
-async function handeClick() {
+function handeClick() {
 	if (!usersStore.currentUserId) {
 		throw Error("User was not found");
 	}
@@ -77,8 +77,7 @@ async function handeClick() {
 		markdown: content.value,
 		html: html.value,
 	};
-	await posts.createPost(newPost);
-	router.push({ name: "home" });
+	emit("submit", newPost);
 }
 </script>
 
