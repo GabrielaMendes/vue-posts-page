@@ -61,7 +61,7 @@ function resetForm() {
 			v-model="password"
 			:status="passwordStatus"
 		/>
-    <div v-ir="error" class="is-danger help">
+    <div v-if="error" class="is-danger help">
       {{ error }}
     </div>
 		<button class="button" :disabled="isInvalid">Submit</button>
