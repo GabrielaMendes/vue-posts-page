@@ -1,14 +1,14 @@
 <script lang="ts" setup>
 import { ref, onMounted, watch } from "vue";
 import { useRouter } from "vue-router";
-import { TimelinePost } from "../posts";
+import { TimelinePost, Post } from "../posts";
 import { marked } from "marked";
 import highlightjs from "highlight.js";
 import debounce from "lodash/debounce";
 import { usePosts } from "../stores/posts";
 
 const props = defineProps<{
-	post: TimelinePost;
+	post: TimelinePost | Post;
 }>();
 
 const title = ref(props.post.title);
