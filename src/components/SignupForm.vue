@@ -7,9 +7,10 @@ import UserForm from "./UserForm.vue";
 const usersStore = useUsers();
 const modal = useModal();
 
-async function handleSignup(newUser: NewUser) {
-  await usersStore.createUser(newUser);
+async function handleSignup(payload: { newUser: NewUser, reset: Function }) {
+  await usersStore.createUser(payload.newUser);
   modal.hideModal();
+  payload.reset();
 }
 </script>
 

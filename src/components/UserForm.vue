@@ -9,7 +9,7 @@ defineProps<{
 }>();
 
 const emit = defineEmits<{
-	(event: "submit", payload: NewUser): void;
+	(event: "submit", payload: {newUser: NewUser, reset: Function}): void;
 }>();
 
 const username = ref("");
@@ -37,8 +37,13 @@ async function handleSubmit() {
 	};
 
 	try {
-		emit("submit", newUser);
+		emit("submit", {newUser: newUser, reset: resetForm});
 	} catch (e) {}
+}
+
+function resetForm() {
+  username.value = ""
+  password.value = ""
 }
 </script>
 

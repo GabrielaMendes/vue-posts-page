@@ -9,8 +9,8 @@ const usersStore = useUsers();
 const modal = useModal();
 const error = ref("");
 
-async function handleSignin(newUser: NewUser) {
-	const body = JSON.stringify(newUser);
+async function handleSignin(payload: { newUser: NewUser, reset: Function }) {
+	const body = JSON.stringify(payload.newUser);
 	const res = await window.fetch("/api/login", {
 		method: "POST",
 		headers: {
@@ -22,8 +22,9 @@ async function handleSignin(newUser: NewUser) {
 	if ([401, 404].includes(res.status)) {
 		error.value = "Username or password was incorrect.";
 	} else {
-		usersStore.authenticate();
+    usersStore.authenticate();
 		modal.hideModal();
+    payload.reset()
 	}
 }
 </script>
