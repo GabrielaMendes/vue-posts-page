@@ -20,9 +20,8 @@ export const router = createRouter({
 			beforeEnter: (to, from, next) => {
 				const usersStore = useUsers();
 				if (!usersStore.currentUserId) {
-					console.log(usersStore.currentUserId);
-					console.log("not authorized");
 					next({ name: "home" });
+          return;
 				}
 
 				next();

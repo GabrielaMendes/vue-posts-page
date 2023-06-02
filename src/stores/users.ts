@@ -12,19 +12,17 @@ export const useUsers = defineStore("users", {
 
 	actions: {
 		async authenticate() {
-      setTimeout(async () => {
-        try {
-					const res = await window.fetch("/api/current-user", {
-						headers: {
-							"Content-Type": "application/json",
-						},
-					});
-					const result = await res.json();
-					this.currentUserId = result.id;
-				} catch (e) {
-					this.currentUserId = undefined;
-				}
-      }, 2000)
+			try {
+				const res = await window.fetch("/api/current-user", {
+					headers: {
+						"Content-Type": "application/json",
+					},
+				});
+				const result = await res.json();
+				this.currentUserId = result.id;
+			} catch (e) {
+				this.currentUserId = undefined;
+			}
 		},
 
 		async createUser(newUser: NewUser) {

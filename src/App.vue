@@ -1,19 +1,15 @@
 <script lang="ts" setup>
 import { computed } from "vue";
 import { useModal } from "./composables/modal";
-import { useUsers } from "./stores/users";
 import TheNavbar from "./components/TheNavbar.vue";
 
 const modal = useModal();
-const usersStore = useUsers();
 
 const modalVisibility = computed(() => {
 	return {
 		display: modal.show.value ? "block" : "none",
 	};
 });
-
-usersStore.authenticate();
 </script>
 
 <template>
