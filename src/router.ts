@@ -1,7 +1,8 @@
 import { createRouter, createWebHistory } from "vue-router";
+import { useUsers } from "./stores/users";
 import HomeView from "./views/HomeView.vue";
 import NewPostView from "./views/NewPostView.vue";
-import { useUsers } from "./stores/users";
+import ShowPostView from "./views/NewPostView.vue";
 
 export const router = createRouter({
 	history: createWebHistory(),
@@ -25,6 +26,11 @@ export const router = createRouter({
 
 				next();
 			},
+		},
+		{
+			path: "/posts/:id",
+			name: "post",
+			component: ShowPostView,
 		},
 	],
 });
