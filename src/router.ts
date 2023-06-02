@@ -2,7 +2,7 @@ import { createRouter, createWebHistory } from "vue-router";
 import { useUsers } from "./stores/users";
 import HomeView from "./views/HomeView.vue";
 import NewPostView from "./views/NewPostView.vue";
-import ShowPostView from "./views/NewPostView.vue";
+import ShowPostView from "./views/ShowPostView.vue";
 
 export const router = createRouter({
 	history: createWebHistory(),
