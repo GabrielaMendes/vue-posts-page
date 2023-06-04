@@ -9,7 +9,7 @@ defineProps<{
 }>();
 
 const emit = defineEmits<{
-	(event: "submit", payload: {newUser: NewUser, reset: Function}): void;
+	(event: "submit", payload: { newUser: NewUser; reset: Function }): void;
 }>();
 
 const username = ref("");
@@ -37,33 +37,35 @@ async function handleSubmit() {
 	};
 
 	try {
-		emit("submit", {newUser: newUser, reset: resetForm});
+		emit("submit", { newUser: newUser, reset: resetForm });
 	} catch (e) {}
 }
 
 function resetForm() {
-  username.value = ""
-  password.value = ""
+	username.value = "";
+	password.value = "";
 }
 </script>
 
 <template>
 	<form class="form" @submit.prevent="handleSubmit">
 		<FormInput
+			data-testid="username"
 			name="username"
 			type="text"
 			v-model="username"
 			:status="usernameStatus"
 		/>
 		<FormInput
+			data-testid="password"
 			name="password"
 			type="password"
 			v-model="password"
 			:status="passwordStatus"
 		/>
-    <div v-if="error" class="is-danger help">
-      {{ error }}
-    </div>
+		<div v-if="error" class="is-danger help">
+			{{ error }}
+		</div>
 		<button class="button" :disabled="isInvalid">Submit</button>
 	</form>
 </template>
