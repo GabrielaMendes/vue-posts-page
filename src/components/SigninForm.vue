@@ -30,5 +30,5 @@ async function handleSignin(payload: { newUser: NewUser, reset: Function }) {
 </script>
 
 <template>
-	<UserForm @submit="handleSignin" :error="error" />
+	<UserForm id="signin-form" @submit="handleSignin" :error="error" />
 </template>
