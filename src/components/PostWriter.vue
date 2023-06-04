@@ -11,8 +11,8 @@ const props = defineProps<{
 }>();
 
 const emit = defineEmits<{
-  (event: "submit", post: Post): void
-}>()
+	(event: "submit", post: Post): void;
+}>();
 
 const title = ref(props.post.title);
 const content = ref(props.post.markdown);
@@ -93,7 +93,12 @@ function handeClick() {
 
 	<div class="columns">
 		<div class="column">
-			<div contenteditable ref="contentEditable" @input="handleInput" />
+			<div
+				contenteditable
+				id="contenteditable"
+				ref="contentEditable"
+				@input="handleInput"
+			/>
 		</div>
 		<div class="column">
 			<div v-html="html" />
@@ -102,7 +107,11 @@ function handeClick() {
 
 	<div class="comumns">
 		<div class="column">
-			<button class="button is-primary is-pulled-right" @click="handeClick">
+			<button
+				id="submit"
+				class="button is-primary is-pulled-right"
+				@click="handeClick"
+			>
 				Save Post
 			</button>
 		</div>
